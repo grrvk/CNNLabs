@@ -1,0 +1,8 @@
+torch>=2.9
+torchvision>=0.24
+lightning>=2.5
+torchmetrics>=1.4
+pycocotools>=2.0.10
+pillow>=10.0
+matplotlib>=3.8
+ipykernel>=6.29
