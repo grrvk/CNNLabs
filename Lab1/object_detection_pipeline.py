@@ -314,7 +314,7 @@ class FasterRCNNLit(pl.LightningModule):
     def configure_optimizers(self):
         params = [p for p in self.model.parameters() if p.requires_grad]
         opt = torch.optim.AdamW(params, lr=self.hparams.lr, weight_decay=self.hparams.weight_decay)
-        sch = torch.optim.lr_scheduler.StepLR(opt, step_size=5, gamma=0.01)
+        sch = torch.optim.lr_scheduler.StepLR(opt, step_size=5, gamma=0.1) # was gamma=0.01, changed for better training
         return {"optimizer": opt, "lr_scheduler": sch}
 
 
@@ -325,7 +325,7 @@ def main():
     parser.add_argument("--num_workers", type=int, default=4)
     parser.add_argument("--val_split", type=float, default=0.1)
     parser.add_argument("--max_epochs", type=int, default=20)
-    parser.add_argument("--lr", type=float, default=1e-6)
+    parser.add_argument("--lr", type=float, default=1e-4) # was 1e-6, changed for better training
     # BEFORE: None
     # FIX: we had weight_decay field in FasterRCNNLit init, however 
     # we did not have argparse param for it and never passed it to the module
@@ -369,6 +369,6 @@ def main():
     print("Best checkpoint:", ckpt.best_model_path)
 
 
-# python Lab1/object_detection_pipeline_with_bugs.py --data_dir Lab1/sample_data --batch_size 2 --num_workers 1 --val_split 0.3 --max_epochs 8 --seed 42 --lr 1e-4
+# python Lab1/object_detection_pipeline.py --data_dir Lab1/sample_data --batch_size 2 --num_workers 1 --val_split 0.3 --max_epochs 8 --seed 42 --lr 1e-4
 if __name__ == "__main__":
     main()
