@@ -1,0 +1,6 @@
+torch>=2.9
+torchvision>=0.24
+einops>=0.8
+pandas>=2.2
+matplotlib>=3.8
+ipykernel>=6.29
